@@ -2552,7 +2552,7 @@ define("catch-the-mouse/routes/application", ["exports", "@ember/routing/route",
         var langs = this.langs;
         var langsCount = langs && langs.length;
         langs && langs.length > 0 && langs.forEach(function (l) {
-          var translation = _this.getJSON((location.href.includes('catch-the-mouse') ? location.href + '/assets' : '') + '/lang/strings_' + l + '.json').then(function (t) {
+          var translation = _this.getJSON((location.href.includes('catch-the-mouse') ? location.href + 'lang' : '/lang') + '/strings_' + l + '.json').then(function (t) {
             var allTranslations = _this.allTranslations;
 
             if ((0, _utils.isEmpty)(allTranslations)) {
