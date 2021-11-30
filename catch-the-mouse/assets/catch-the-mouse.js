@@ -11,7 +11,7 @@
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@ember/application",0,"catch-the-mouse/resolver",0,"ember-load-initializers",0,"catch-the-mouse/config/environment"eaimeta@70e063a35619d71f
 
-  const App = _application.default.extend({
+  var App = _application.default.extend({
     modulePrefix: _environment.default.modulePrefix,
     podModulePrefix: _environment.default.podModulePrefix,
     Resolver: _resolver.default
@@ -29,7 +29,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _emberComponentManager.default;
     }
   });
@@ -75,7 +75,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _basicDropdownContent.default;
     }
   });
@@ -89,7 +89,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _basicDropdownOptionalTag.default;
     }
   });
@@ -103,7 +103,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _basicDropdownTrigger.default;
     }
   });
@@ -117,7 +117,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _basicDropdown.default;
     }
   });
@@ -147,35 +147,32 @@
     points: (0, _computed.alias)('gameService.points'),
     isPlaying: (0, _computed.alias)('gameService.isPlaying'),
     showScore: (0, _object.computed)('isPlaying', 'confirmedDialog', function () {
-      const confirmedDialog = this.confirmedDialog;
-      const isPlaying = this.isPlaying;
+      var confirmedDialog = this.confirmedDialog;
+      var isPlaying = this.isPlaying;
       return !confirmedDialog && isPlaying;
     }),
-
-    didInsertElement() {
-      this._super(...arguments);
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
 
       (0, _object.set)(this, 'confirmedDialog', false);
-      const localStorageService = this.localStorageService;
-      const records = localStorageService && localStorageService.getCachedItem('records');
+      var localStorageService = this.localStorageService;
+      var records = localStorageService && localStorageService.getCachedItem('records');
 
       if (records) {
         (0, _object.set)(this, 'records', records);
       }
     },
-
-    showBoard() {
+    showBoard: function showBoard() {
       (0, _object.set)(this, 'confirmedDialog', true);
     },
-
-    saveScore() {
-      const user = this.user ? this.user : '';
-      const points = this.points;
-      const newRecord = {
-        user,
-        points
+    saveScore: function saveScore() {
+      var user = this.user ? this.user : '';
+      var points = this.points;
+      var newRecord = {
+        user: user,
+        points: points
       };
-      let records = this.records ? this.records : [];
+      var records = this.records ? this.records : [];
       records.pushObject(newRecord);
       records = records.sortBy('points');
 
@@ -184,24 +181,21 @@
       }
 
       records = records.reverse();
-      const localStorageService = this.localStorageService;
+      var localStorageService = this.localStorageService;
       localStorageService && localStorageService.setCachedItem('records', records);
       (0, _object.set)(this, 'records', records);
       (0, _object.set)(this, 'confirmedDialog', true);
     },
-
-    goHome() {
-      const gameService = this.gameService;
+    goHome: function goHome() {
+      var gameService = this.gameService;
       gameService && gameService.goHome();
     },
-
-    resetCachedPoints() {
-      const localStorageService = this.localStorageService;
-      const records = [];
+    resetCachedPoints: function resetCachedPoints() {
+      var localStorageService = this.localStorageService;
+      var records = [];
       localStorageService && localStorageService.setCachedItem('records', records);
       (0, _object.set)(this, 'records', records);
     }
-
   }, (_applyDecoratedDescriptor(_obj, "showBoard", [_object.action], Object.getOwnPropertyDescriptor(_obj, "showBoard"), _obj), _applyDecoratedDescriptor(_obj, "saveScore", [_object.action], Object.getOwnPropertyDescriptor(_obj, "saveScore"), _obj), _applyDecoratedDescriptor(_obj, "goHome", [_object.action], Object.getOwnPropertyDescriptor(_obj, "goHome"), _obj), _applyDecoratedDescriptor(_obj, "resetCachedPoints", [_object.action], Object.getOwnPropertyDescriptor(_obj, "resetCachedPoints"), _obj)), _obj));
 
   _exports.default = _default;
@@ -229,25 +223,25 @@
     allowedClick: false,
     mice: ['mouse-1', 'mouse-2', 'mouse-3'],
     cats: ['cat-1', 'cat-2', 'cat-3'],
+    didInsertElement: function didInsertElement() {
+      this._super.apply(this, arguments);
 
-    didInsertElement() {
-      this._super(...arguments);
-
-      const mice = this.mice ? this.mice : [];
-      const cats = this.cats ? this.cats : [];
+      var mice = this.mice ? this.mice : [];
+      var cats = this.cats ? this.cats : [];
       this.type = cats.includes(this.name) ? 'cat' : 'mouse';
       this.getFreeGate();
     },
+    setupGate: function setupGate() {
+      var _this = this;
 
-    setupGate() {
-      const gate = this.gate;
-      const gameService = this.gameService;
-      const left = gate && gate.left;
-      const bottom = gate && gate.bottom;
-      const rotate = gate && gate.rotate;
-      const animationTime = Math.floor(Math.random() * 1250) + 500;
-      const element = this.element;
-      const imageElement = element && element.getElementsByClassName('gs-char-image')[0];
+      var gate = this.gate;
+      var gameService = this.gameService;
+      var left = gate && gate.left;
+      var bottom = gate && gate.bottom;
+      var rotate = gate && gate.rotate;
+      var animationTime = Math.floor(Math.random() * 1250) + 500;
+      var element = this.element;
+      var imageElement = element && element.getElementsByClassName('gs-char-image')[0];
 
       if (element && element.style) {
         element.style.left = left + '%';
@@ -263,56 +257,56 @@
       } // show char
 
 
-      setTimeout(() => {
+      setTimeout(function () {
         // hide char
-        const element = this.element;
-        const imageElement = element && element.getElementsByClassName('gs-char-image')[0];
+        var element = _this.element;
+        var imageElement = element && element.getElementsByClassName('gs-char-image')[0];
 
         if (imageElement && imageElement.style) {
           imageElement.style.top = '100%';
         }
 
-        setTimeout(() => {
-          this.unlockGate();
+        setTimeout(function () {
+          _this.unlockGate();
         }, animationTime);
       }, animationTime + 250);
     },
+    getFreeGate: function getFreeGate() {
+      var _this2 = this;
 
-    getFreeGate() {
-      const waitTime = Math.floor(Math.random() * 4) * 1000;
-      const gameService = this.gameService;
-      const element = this.element;
+      var waitTime = Math.floor(Math.random() * 4) * 1000;
+      var gameService = this.gameService;
+      var element = this.element;
 
       if (element && element.style) {
         element.style.left = '100vw';
         element.style.bottom = '100vh';
       }
 
-      setTimeout(() => {
-        if (this.isDestroyed || this.isDestroying || !gameService || this.gate) {
+      setTimeout(function () {
+        if (_this2.isDestroyed || _this2.isDestroying || !gameService || _this2.gate) {
           return;
         }
 
-        this.gate = gameService.getFreeGate();
+        _this2.gate = gameService.getFreeGate();
 
-        if (!this.gate) {
-          this.getFreeGate();
+        if (!_this2.gate) {
+          _this2.getFreeGate();
         } else {
-          this.setupGate();
+          _this2.setupGate();
         }
       }, waitTime);
     },
-
-    unlockGate() {
-      const gate = this.gate;
+    unlockGate: function unlockGate() {
+      var gate = this.gate;
 
       if (!gate) {
         return;
       }
 
       this.gate = undefined;
-      const gameService = this.gameService;
-      const isDestroying = this.isDestroyed || this.isDestroying;
+      var gameService = this.gameService;
+      var isDestroying = this.isDestroyed || this.isDestroying;
 
       if (this.allowedClick && !isDestroying) {
         this.allowedClick = false;
@@ -324,52 +318,50 @@
         this.getFreeGate();
       }
     },
-
-    handleClick() {
+    handleClick: function handleClick() {
       if (this.allowedClick) {
         this.allowedClick = false;
       } else {
         return;
       }
 
-      const element = this.element;
-      const imageElement = element && element.getElementsByClassName('gs-char-image')[0];
+      var element = this.element;
+      var imageElement = element && element.getElementsByClassName('gs-char-image')[0];
 
       if (imageElement && imageElement.style) {
         imageElement.style.transitionDuration = '0.25s';
         imageElement.style.top = '100%';
       }
 
-      const gameService = this.gameService;
+      var gameService = this.gameService;
       gameService && this.type === 'mouse' && gameService.incrementPoints() || this.type === 'cat' && gameService.decrementPoints();
     }
-
   }, (_applyDecoratedDescriptor(_obj, "type", [_tracking.tracked], (_init = Object.getOwnPropertyDescriptor(_obj, "type"), _init = _init ? _init.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "name", [_tracking.tracked], (_init2 = Object.getOwnPropertyDescriptor(_obj, "name"), _init2 = _init2 ? _init2.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init2;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "gate", [_tracking.tracked], (_init3 = Object.getOwnPropertyDescriptor(_obj, "gate"), _init3 = _init3 ? _init3.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init3;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "allowedClick", [_tracking.tracked], (_init4 = Object.getOwnPropertyDescriptor(_obj, "allowedClick"), _init4 = _init4 ? _init4.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init4;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "handleClick", [_object.action], Object.getOwnPropertyDescriptor(_obj, "handleClick"), _obj)), _obj));
@@ -396,27 +388,27 @@
     points: (0, _computed.alias)('gameService.points'),
     time: (0, _computed.alias)('gameService.time'),
     pointsClass: (0, _object.computed)('gameService.pointState', 'points', function () {
-      const gameService = this.gameService;
-      const pointState = gameService && gameService.pointState;
-      const points = this.points;
+      var gameService = this.gameService;
+      var pointState = gameService && gameService.pointState;
+      var points = this.points;
       return 'points-' + (points === 0 ? 'initial' : pointState === 'increased' ? 'increased' : 'decreased');
     }),
     pointsTimeClass: (0, _object.computed)('time', function () {
-      const gameService = this.gameService;
-      const time = gameService && gameService.time;
+      var gameService = this.gameService;
+      var time = gameService && gameService.time;
       return 'points-timer-' + (time < 6 ? 'warning' : 'ok');
     }),
-
-    endGame() {
-      const gameService = this.gameService;
+    endGame: function endGame() {
+      var gameService = this.gameService;
       gameService && gameService.endGame();
     }
-
   }, (_applyDecoratedDescriptor(_obj, "endGame", [_object.action], Object.getOwnPropertyDescriptor(_obj, "endGame"), _obj)), _obj));
 
   _exports.default = _default;
 });
-;define("catch-the-mouse/components/lang-switch", ["exports", "@glimmer/component", "@ember/service", "@ember/object/computed", "@ember/object"], function (_exports, _component, _service, _computed, _object) {
+;function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+define("catch-the-mouse/components/lang-switch", ["exports", "@glimmer/component", "@ember/service", "@ember/object/computed", "@ember/object"], function (_exports, _component, _service, _computed, _object) {
   'use strict';
 
   Object.defineProperty(_exports, "__esModule", {
@@ -430,31 +422,69 @@
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+  function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
   function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  let _class = (_dec = (0, _computed.alias)('langService.lang'), _dec2 = (0, _computed.alias)('langService.langs'), (_class2 = class _class2 extends _component.default {
-    constructor() {
-      super(...arguments);
+  var _class = (_dec = (0, _computed.alias)('langService.lang'), _dec2 = (0, _computed.alias)('langService.langs'), (_class2 = /*#__PURE__*/function (_Component) {
+    _inherits(_class2, _Component);
 
-      _defineProperty(this, "classNames", ['lang-switch']);
+    var _super = _createSuper(_class2);
 
-      _initializerDefineProperty(this, "langService", _descriptor, this);
+    function _class2() {
+      var _this;
 
-      _initializerDefineProperty(this, "lang", _descriptor2, this);
+      _classCallCheck(this, _class2);
 
-      _initializerDefineProperty(this, "langs", _descriptor3, this);
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = _super.call.apply(_super, [this].concat(args));
+
+      _defineProperty(_assertThisInitialized(_this), "classNames", ['lang-switch']);
+
+      _initializerDefineProperty(_assertThisInitialized(_this), "langService", _descriptor, _assertThisInitialized(_this));
+
+      _initializerDefineProperty(_assertThisInitialized(_this), "lang", _descriptor2, _assertThisInitialized(_this));
+
+      _initializerDefineProperty(_assertThisInitialized(_this), "langs", _descriptor3, _assertThisInitialized(_this));
+
+      return _this;
     }
 
-    switchLang(lang) {
-      const langService = this.langService;
-      lang && langService && langService.setupLang(lang);
-    }
+    _createClass(_class2, [{
+      key: "switchLang",
+      value: function switchLang(lang) {
+        var langService = this.langService;
+        lang && langService && langService.setupLang(lang);
+      }
+    }]);
 
-  }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "langService", [_service.inject], {
+    return _class2;
+  }(_component.default), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "langService", [_service.inject], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -473,7 +503,9 @@
 
   _exports.default = _class;
 });
-;define("catch-the-mouse/components/main-screen", ["exports", "@glimmer/component", "@glimmer/tracking", "@ember/object", "@ember/object/computed", "@ember/service"], function (_exports, _component, _tracking, _object, _computed, _service) {
+;function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+define("catch-the-mouse/components/main-screen", ["exports", "@glimmer/component", "@glimmer/tracking", "@ember/object", "@ember/object/computed", "@ember/service"], function (_exports, _component, _tracking, _object, _computed, _service) {
   'use strict';
 
   Object.defineProperty(_exports, "__esModule", {
@@ -487,31 +519,69 @@
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+  function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
   function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  let _class = (_dec = (0, _computed.alias)('gameService.gameScreen'), _dec2 = (0, _computed.alias)('gameService.boardScreen'), (_class2 = class _class2 extends _component.default {
-    constructor() {
-      super(...arguments);
+  var _class = (_dec = (0, _computed.alias)('gameService.gameScreen'), _dec2 = (0, _computed.alias)('gameService.boardScreen'), (_class2 = /*#__PURE__*/function (_Component) {
+    _inherits(_class2, _Component);
 
-      _defineProperty(this, "classNames", ['main-screen']);
+    var _super = _createSuper(_class2);
 
-      _initializerDefineProperty(this, "gameService", _descriptor, this);
+    function _class2() {
+      var _this;
 
-      _initializerDefineProperty(this, "gameScreen", _descriptor2, this);
+      _classCallCheck(this, _class2);
 
-      _initializerDefineProperty(this, "boardScreen", _descriptor3, this);
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = _super.call.apply(_super, [this].concat(args));
+
+      _defineProperty(_assertThisInitialized(_this), "classNames", ['main-screen']);
+
+      _initializerDefineProperty(_assertThisInitialized(_this), "gameService", _descriptor, _assertThisInitialized(_this));
+
+      _initializerDefineProperty(_assertThisInitialized(_this), "gameScreen", _descriptor2, _assertThisInitialized(_this));
+
+      _initializerDefineProperty(_assertThisInitialized(_this), "boardScreen", _descriptor3, _assertThisInitialized(_this));
+
+      return _this;
     }
 
-    startGame() {
-      const gameService = this.gameService;
-      gameService && gameService.startGame();
-    }
+    _createClass(_class2, [{
+      key: "startGame",
+      value: function startGame() {
+        var gameService = this.gameService;
+        gameService && gameService.startGame();
+      }
+    }]);
 
-  }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "gameService", [_service.inject], {
+    return _class2;
+  }(_component.default), (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "gameService", [_service.inject], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -538,7 +608,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _maybeInElement.default;
     }
   });
@@ -552,7 +622,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _powerSelectMultiple.default;
     }
   });
@@ -566,7 +636,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _trigger.default;
     }
   });
@@ -580,7 +650,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _powerSelect.default;
     }
   });
@@ -594,7 +664,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _beforeOptions.default;
     }
   });
@@ -608,7 +678,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _noMatchesMessage.default;
     }
   });
@@ -622,7 +692,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _options.default;
     }
   });
@@ -636,7 +706,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _placeholder.default;
     }
   });
@@ -650,7 +720,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _powerSelectGroup.default;
     }
   });
@@ -664,7 +734,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _searchMessage.default;
     }
   });
@@ -678,7 +748,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _trigger.default;
     }
   });
@@ -745,7 +815,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _element.default;
     }
   });
@@ -759,13 +829,13 @@
   });
   Object.defineProperty(_exports, "and", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _and.and;
     }
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _and.default;
     }
   });
@@ -779,13 +849,13 @@
   });
   Object.defineProperty(_exports, "append", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _append.append;
     }
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _append.default;
     }
   });
@@ -799,13 +869,13 @@
   });
   Object.defineProperty(_exports, "assign", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _assign.assign;
     }
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _assign.default;
     }
   });
@@ -819,13 +889,13 @@
   });
   Object.defineProperty(_exports, "call", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _call.call;
     }
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _call.default;
     }
   });
@@ -839,7 +909,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _cancelAll.default;
     }
   });
@@ -853,13 +923,13 @@
   });
   Object.defineProperty(_exports, "chunk", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _chunk.chunk;
     }
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _chunk.default;
     }
   });
@@ -873,7 +943,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _compact.default;
     }
   });
@@ -887,13 +957,13 @@
   });
   Object.defineProperty(_exports, "compute", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _compute.compute;
     }
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _compute.default;
     }
   });
@@ -907,13 +977,13 @@
   });
   Object.defineProperty(_exports, "contains", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _contains.contains;
     }
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _contains.default;
     }
   });
@@ -927,13 +997,13 @@
   });
   Object.defineProperty(_exports, "dec", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _dec.dec;
     }
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _dec.default;
     }
   });
@@ -947,7 +1017,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _drop.default;
     }
   });
@@ -961,7 +1031,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _element.default;
     }
   });
@@ -975,13 +1045,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _emberPowerSelectIsGroup.default;
     }
   });
   Object.defineProperty(_exports, "emberPowerSelectIsGroup", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _emberPowerSelectIsGroup.emberPowerSelectIsGroup;
     }
   });
@@ -995,13 +1065,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _emberPowerSelectIsSelected.default;
     }
   });
   Object.defineProperty(_exports, "emberPowerSelectIsSelected", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _emberPowerSelectIsSelected.emberPowerSelectIsSelected;
     }
   });
@@ -1015,7 +1085,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _util.EnsureSafeComponentHelper;
     }
   });
@@ -1029,13 +1099,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _entries.default;
     }
   });
   Object.defineProperty(_exports, "entries", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _entries.entries;
     }
   });
@@ -1049,13 +1119,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _equal.default;
     }
   });
   Object.defineProperty(_exports, "equal", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _equal.equal;
     }
   });
@@ -1069,7 +1139,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _filterBy.default;
     }
   });
@@ -1083,7 +1153,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _filter.default;
     }
   });
@@ -1097,7 +1167,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _findBy.default;
     }
   });
@@ -1111,13 +1181,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _flatten.default;
     }
   });
   Object.defineProperty(_exports, "flatten", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _flatten.flatten;
     }
   });
@@ -1131,13 +1201,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _fromEntries.default;
     }
   });
   Object.defineProperty(_exports, "fromEntries", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _fromEntries.fromEntries;
     }
   });
@@ -1151,7 +1221,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _groupBy.default;
     }
   });
@@ -1165,13 +1235,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _gt.default;
     }
   });
   Object.defineProperty(_exports, "gt", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _gt.gt;
     }
   });
@@ -1185,13 +1255,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _gte.default;
     }
   });
   Object.defineProperty(_exports, "gte", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _gte.gte;
     }
   });
@@ -1205,13 +1275,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _hasNext.default;
     }
   });
   Object.defineProperty(_exports, "hasNext", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _hasNext.hasNext;
     }
   });
@@ -1225,13 +1295,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _hasPrevious.default;
     }
   });
   Object.defineProperty(_exports, "hasPrevious", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _hasPrevious.hasPrevious;
     }
   });
@@ -1245,13 +1315,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _inc.default;
     }
   });
   Object.defineProperty(_exports, "inc", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _inc.inc;
     }
   });
@@ -1265,13 +1335,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _includes.default;
     }
   });
   Object.defineProperty(_exports, "includes", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _includes.includes;
     }
   });
@@ -1285,7 +1355,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _intersect.default;
     }
   });
@@ -1299,13 +1369,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _invoke.default;
     }
   });
   Object.defineProperty(_exports, "invoke", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _invoke.invoke;
     }
   });
@@ -1319,13 +1389,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _isArray.default;
     }
   });
   Object.defineProperty(_exports, "isArray", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _isArray.isArray;
     }
   });
@@ -1339,7 +1409,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _isEmpty.default;
     }
   });
@@ -1353,13 +1423,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _isEqual.default;
     }
   });
   Object.defineProperty(_exports, "isEqual", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _isEqual.isEqual;
     }
   });
@@ -1373,7 +1443,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _join.default;
     }
   });
@@ -1387,13 +1457,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _keys.default;
     }
   });
   Object.defineProperty(_exports, "keys", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _keys.keys;
     }
   });
@@ -1408,38 +1478,47 @@
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@ember/component/helper",0,"@ember/service"eaimeta@70e063a35619d71f
 
+  function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+  function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+  function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+  function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+  function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+  function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
   var _default = _helper.default.extend({
     langService: (0, _service.inject)(),
+    init: function init() {
+      this._super.apply(this, arguments);
 
-    init() {
-      this._super(...arguments);
-
-      const langService = this.langService;
+      var langService = this.langService;
       langService && langService.subscribe(this, 'onLangChange');
     },
-
-    willDestroy() {
-      const langService = this.langService;
+    willDestroy: function willDestroy() {
+      var langService = this.langService;
       langService && langService.unsubscribe(this, 'onLangChange');
     },
-
-    onLangChange() {
-      const langService = this.langService;
-      const isLangSetup = langService && langService.isLangSetup;
-      const lang = langService && langService.lang;
-      const allTranslations = langService && langService.allTranslations;
+    onLangChange: function onLangChange() {
+      var langService = this.langService;
+      var isLangSetup = langService && langService.isLangSetup;
+      var lang = langService && langService.lang;
+      var allTranslations = langService && langService.allTranslations;
 
       if (isLangSetup && lang && allTranslations && allTranslations.length > 0) {
         this.recompute();
       }
     },
+    compute: function compute(_ref) {
+      var _ref2 = _slicedToArray(_ref, 1),
+          text = _ref2[0];
 
-    compute(_ref) {
-      let [text] = _ref;
-      const langService = this.langService;
+      var langService = this.langService;
       return langService && langService.loc(text);
     }
-
   });
 
   _exports.default = _default;
@@ -1452,13 +1531,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _lt.default;
     }
   });
   Object.defineProperty(_exports, "lt", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _lt.lt;
     }
   });
@@ -1472,13 +1551,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _lte.default;
     }
   });
   Object.defineProperty(_exports, "lte", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _lte.lte;
     }
   });
@@ -1492,7 +1571,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _mapBy.default;
     }
   });
@@ -1506,7 +1585,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _map.default;
     }
   });
@@ -1520,13 +1599,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _next.default;
     }
   });
   Object.defineProperty(_exports, "next", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _next.next;
     }
   });
@@ -1540,13 +1619,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _noop.default;
     }
   });
   Object.defineProperty(_exports, "noop", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _noop.noop;
     }
   });
@@ -1560,13 +1639,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _notEqual.default;
     }
   });
   Object.defineProperty(_exports, "notEqualHelper", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _notEqual.notEqualHelper;
     }
   });
@@ -1580,13 +1659,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _not.default;
     }
   });
   Object.defineProperty(_exports, "not", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _not.not;
     }
   });
@@ -1600,13 +1679,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _objectAt.default;
     }
   });
   Object.defineProperty(_exports, "objectAt", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _objectAt.objectAt;
     }
   });
@@ -1620,13 +1699,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _optional.default;
     }
   });
   Object.defineProperty(_exports, "optional", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _optional.optional;
     }
   });
@@ -1640,13 +1719,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _or.default;
     }
   });
   Object.defineProperty(_exports, "or", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _or.or;
     }
   });
@@ -1660,7 +1739,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _perform.default;
     }
   });
@@ -1674,13 +1753,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _pick.default;
     }
   });
   Object.defineProperty(_exports, "pick", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _pick.pick;
     }
   });
@@ -1694,7 +1773,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _pipeAction.default;
     }
   });
@@ -1708,13 +1787,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _pipe.default;
     }
   });
   Object.defineProperty(_exports, "pipe", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _pipe.pipe;
     }
   });
@@ -1728,13 +1807,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _previous.default;
     }
   });
   Object.defineProperty(_exports, "previous", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _previous.previous;
     }
   });
@@ -1748,13 +1827,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _queue.default;
     }
   });
   Object.defineProperty(_exports, "queue", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _queue.queue;
     }
   });
@@ -1768,13 +1847,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _range.default;
     }
   });
   Object.defineProperty(_exports, "range", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _range.range;
     }
   });
@@ -1788,7 +1867,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _reduce.default;
     }
   });
@@ -1802,7 +1881,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _rejectBy.default;
     }
   });
@@ -1816,13 +1895,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _repeat.default;
     }
   });
   Object.defineProperty(_exports, "repeat", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _repeat.repeat;
     }
   });
@@ -1836,7 +1915,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _reverse.default;
     }
   });
@@ -1850,13 +1929,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _shuffle.default;
     }
   });
   Object.defineProperty(_exports, "shuffle", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _shuffle.shuffle;
     }
   });
@@ -1870,7 +1949,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _slice.default;
     }
   });
@@ -1884,7 +1963,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _sortBy.default;
     }
   });
@@ -1898,7 +1977,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _take.default;
     }
   });
@@ -1912,7 +1991,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _task.default;
     }
   });
@@ -1926,7 +2005,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _toggleAction.default;
     }
   });
@@ -1940,13 +2019,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _toggle.default;
     }
   });
   Object.defineProperty(_exports, "toggle", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _toggle.toggle;
     }
   });
@@ -1960,7 +2039,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _union.default;
     }
   });
@@ -1974,13 +2053,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _values.default;
     }
   });
   Object.defineProperty(_exports, "values", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _values.values;
     }
   });
@@ -1994,13 +2073,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _without.default;
     }
   });
   Object.defineProperty(_exports, "without", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _without.without;
     }
   });
@@ -2014,13 +2093,13 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _xor.default;
     }
   });
   Object.defineProperty(_exports, "xor", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _xor.xor;
     }
   });
@@ -2037,12 +2116,10 @@
 
   var _default = {
     name: 'container-debug-adapter',
-
-    initialize() {
-      let app = arguments[1] || arguments[0];
+    initialize: function initialize() {
+      var app = arguments[1] || arguments[0];
       app.register('container-debug-adapter:main', _containerDebugAdapter.default);
     }
-
   };
   _exports.default = _default;
 });
@@ -2054,7 +2131,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _didInsert.default;
     }
   });
@@ -2068,7 +2145,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _didUpdate.default;
     }
   });
@@ -2082,7 +2159,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _style.default;
     }
   });
@@ -2096,7 +2173,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _willDestroy.default;
     }
   });
@@ -2123,7 +2200,7 @@
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@ember/routing/router",0,"catch-the-mouse/config/environment"eaimeta@70e063a35619d71f
 
-  const Router = _router.default.extend({
+  var Router = _router.default.extend({
     location: _environment.default.locationType,
     rootURL: _environment.default.rootURL
   });
@@ -2132,7 +2209,9 @@
   var _default = Router;
   _exports.default = _default;
 });
-;define("catch-the-mouse/routes/application", ["exports", "@ember/routing/route", "@ember/service"], function (_exports, _route, _service) {
+;function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+define("catch-the-mouse/routes/application", ["exports", "@ember/routing/route", "@ember/service"], function (_exports, _route, _service) {
   'use strict';
 
   Object.defineProperty(_exports, "__esModule", {
@@ -2146,25 +2225,63 @@
 
   function _initializerDefineProperty(target, property, descriptor, context) { if (!descriptor) return; Object.defineProperty(target, property, { enumerable: descriptor.enumerable, configurable: descriptor.configurable, writable: descriptor.writable, value: descriptor.initializer ? descriptor.initializer.call(context) : void 0 }); }
 
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+  function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+  function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+  function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+  function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+  function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+  function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
   function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
   function _initializerWarningHelper(descriptor, context) { throw new Error('Decorating class property failed. Please ensure that ' + 'proposal-class-properties is enabled and runs after the decorators transform.'); }
 
-  let AppRoute = (_class = class AppRoute extends _route.default {
-    constructor() {
-      super(...arguments);
+  var AppRoute = (_class = /*#__PURE__*/function (_Route) {
+    _inherits(AppRoute, _Route);
 
-      _initializerDefineProperty(this, "langService", _descriptor, this);
+    var _super = _createSuper(AppRoute);
+
+    function AppRoute() {
+      var _this;
+
+      _classCallCheck(this, AppRoute);
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = _super.call.apply(_super, [this].concat(args));
+
+      _initializerDefineProperty(_assertThisInitialized(_this), "langService", _descriptor, _assertThisInitialized(_this));
+
+      return _this;
     }
 
-    beforeModel() {
-      const langService = this.langService;
-      langService && langService.setupLang();
-    }
+    _createClass(AppRoute, [{
+      key: "beforeModel",
+      value: function beforeModel() {
+        var langService = this.langService;
+        langService && langService.setupLang();
+      }
+    }]);
 
-  }, (_descriptor = _applyDecoratedDescriptor(_class.prototype, "langService", [_service.inject], {
+    return AppRoute;
+  }(_route.default), (_descriptor = _applyDecoratedDescriptor(_class.prototype, "langService", [_service.inject], {
     configurable: true,
     enumerable: true,
     writable: true,
@@ -2180,7 +2297,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _ensureRegistered.default;
     }
   });
@@ -2200,7 +2317,7 @@
 
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
-  const IS_POINT_CHANGED = 'is-point-changed';
+  var IS_POINT_CHANGED = 'is-point-changed';
 
   var _default = _service.default.extend(_evented.default, (_obj = {
     points: 0,
@@ -2260,57 +2377,50 @@
       rotate: 45,
       occupied: false
     }],
-
-    onPointChanged() {
+    onPointChanged: function onPointChanged() {
       this.trigger(IS_POINT_CHANGED);
     },
-
-    subscribe(object, functionName) {
+    subscribe: function subscribe(object, functionName) {
       this.on(IS_POINT_CHANGED, object, functionName);
     },
-
-    unsubscribe(object, functionName) {
+    unsubscribe: function unsubscribe(object, functionName) {
       this.off(IS_POINT_CHANGED, object, functionName);
     },
-
-    incrementPoints() {
+    incrementPoints: function incrementPoints() {
       this.points = (this.points ? this.points : 0) + 1;
       this.pointState = 'increased';
     },
-
-    decrementPoints() {
+    decrementPoints: function decrementPoints() {
       this.points = (this.points > 1 ? this.points : 1) - 1;
       this.pointState = 'decreased';
     },
-
-    resetPoints() {
+    resetPoints: function resetPoints() {
       this.points = 0;
     },
-
-    resetTime() {
+    resetTime: function resetTime() {
       this.time = 30;
     },
+    handleTimer: function handleTimer() {
+      var _this = this;
 
-    handleTimer() {
-      setTimeout(() => {
-        if (this.isDestroyed || this.isDestroying || !this.gameScreen) {
+      setTimeout(function () {
+        if (_this.isDestroyed || _this.isDestroying || !_this.gameScreen) {
           return;
         }
 
-        this.time = this.time - 1;
+        _this.time = _this.time - 1;
 
-        if (this.time < 1) {
-          this.endGame();
+        if (_this.time < 1) {
+          _this.endGame();
         } else {
-          this.handleTimer();
+          _this.handleTimer();
         }
       }, 1000);
     },
-
-    getFreeGate() {
-      const gates = this.gates;
-      const freeGates = gates && gates.length > 0 && gates.filterBy('occupied', false);
-      const freeGateIndex = freeGates && freeGates.length > 0 && Math.floor(Math.random() * freeGates.length);
+    getFreeGate: function getFreeGate() {
+      var gates = this.gates;
+      var freeGates = gates && gates.length > 0 && gates.filterBy('occupied', false);
+      var freeGateIndex = freeGates && freeGates.length > 0 && Math.floor(Math.random() * freeGates.length);
 
       if (freeGateIndex && freeGates[freeGateIndex]) {
         freeGates[freeGateIndex].occupied = true;
@@ -2318,79 +2428,74 @@
 
       return freeGateIndex && freeGates[freeGateIndex];
     },
-
-    unlockGate(gate) {
+    unlockGate: function unlockGate(gate) {
       if (gate && gate.occupied) {
         gate.occupied = false;
       }
     },
-
-    startGame() {
+    startGame: function startGame() {
       this.isPlaying = true;
       this.gameScreen = true;
       this.resetPoints();
       this.resetTime();
       this.handleTimer();
     },
-
-    endGame() {
+    endGame: function endGame() {
       this.gameScreen = false;
       this.boardScreen = true;
     },
-
-    goHome() {
+    goHome: function goHome() {
       this.isPlaying = false;
       this.boardScreen = false;
       this.gameScreen = false;
     }
-
   }, (_applyDecoratedDescriptor(_obj, "points", [_tracking.tracked], (_init = Object.getOwnPropertyDescriptor(_obj, "points"), _init = _init ? _init.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "time", [_tracking.tracked], (_init2 = Object.getOwnPropertyDescriptor(_obj, "time"), _init2 = _init2 ? _init2.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init2;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "pointState", [_tracking.tracked], (_init3 = Object.getOwnPropertyDescriptor(_obj, "pointState"), _init3 = _init3 ? _init3.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init3;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "isPlaying", [_tracking.tracked], (_init4 = Object.getOwnPropertyDescriptor(_obj, "isPlaying"), _init4 = _init4 ? _init4.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init4;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "gameScreen", [_tracking.tracked], (_init5 = Object.getOwnPropertyDescriptor(_obj, "gameScreen"), _init5 = _init5 ? _init5.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init5;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "boardScreen", [_tracking.tracked], (_init6 = Object.getOwnPropertyDescriptor(_obj, "boardScreen"), _init6 = _init6 ? _init6.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init6;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "gates", [_tracking.tracked], (_init7 = Object.getOwnPropertyDescriptor(_obj, "gates"), _init7 = _init7 ? _init7.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init7;
     }
   }), _obj)), _obj));
@@ -2409,9 +2514,11 @@
 
   0; //eaimeta@70e063a35619d71f0,"ember",0,"@ember/service",0,"@ember/object/evented",0,"@ember/utils",0,"@glimmer/tracking",0,"@ember/service"eaimeta@70e063a35619d71f
 
+  function _readOnlyError(name) { throw new TypeError("\"" + name + "\" is read-only"); }
+
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
 
-  const IS_LANG_CHANGED = 'is-lang-changed';
+  var IS_LANG_CHANGED = 'is-lang-changed';
 
   var _default = _service.default.extend(_evented.default, (_obj = {
     langs: ['en', 'sk'],
@@ -2419,21 +2526,19 @@
     lang: 'en',
     isLangSetup: false,
     allTranslations: {},
-
-    onLangChanged() {
+    onLangChanged: function onLangChanged() {
       this.trigger(IS_LANG_CHANGED);
     },
-
-    subscribe(object, functionName) {
+    subscribe: function subscribe(object, functionName) {
       this.on(IS_LANG_CHANGED, object, functionName);
     },
-
-    unsubscribe(object, functionName) {
+    unsubscribe: function unsubscribe(object, functionName) {
       this.off(IS_LANG_CHANGED, object, functionName);
     },
+    setupLang: function setupLang(lang) {
+      var _this = this;
 
-    setupLang(lang) {
-      const localStorageService = this.localStorageService;
+      var localStorageService = this.localStorageService;
 
       if (!this.isLangSetup) {
         if (!lang) {
@@ -2444,21 +2549,21 @@
           lang = 'en';
         }
 
-        const langs = this.langs;
-        const langsCount = langs && langs.length;
-        langs && langs.length > 0 && langs.forEach(l => {
-          const translation = this.getJSON('/lang/strings_' + l + '.json').then(t => {
-            const allTranslations = this.allTranslations;
+        var langs = this.langs;
+        var langsCount = langs && langs.length;
+        langs && langs.length > 0 && langs.forEach(function (l) {
+          var translation = _this.getJSON('/lang/strings_' + l + '.json').then(function (t) {
+            var allTranslations = _this.allTranslations;
 
             if ((0, _utils.isEmpty)(allTranslations)) {
-              allTranslations = {};
+              ({}), _readOnlyError("allTranslations");
             }
 
             allTranslations[l] = t;
-            this.allTranslations = allTranslations;
+            _this.allTranslations = allTranslations;
 
-            if (l === this.lang) {
-              this.onLangChanged();
+            if (l === _this.lang) {
+              _this.onLangChanged();
             }
           });
         });
@@ -2471,14 +2576,13 @@
         this.onLangChanged();
       }
     },
-
-    getJSON(url) {
-      return new _ember.default.RSVP.Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
+    getJSON: function getJSON(url) {
+      return new _ember.default.RSVP.Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
         xhr.open('GET', url);
 
-        xhr.onreadystatechange = req => {
-          const state = req && (req.target || req.currentTarget);
+        xhr.onreadystatechange = function (req) {
+          var state = req && (req.target || req.currentTarget);
 
           if (state.readyState === state.DONE) {
             if (state.status === 200) {
@@ -2494,40 +2598,38 @@
         xhr.send();
       });
     },
-
-    loc(text) {
-      const lang = this.lang;
-      const curTranslations = this.allTranslations;
-      const allTranslations = (0, _utils.isEmpty)(curTranslations) ? {} : curTranslations;
-      let translation = allTranslations[lang];
+    loc: function loc(text) {
+      var lang = this.lang;
+      var curTranslations = this.allTranslations;
+      var allTranslations = (0, _utils.isEmpty)(curTranslations) ? {} : curTranslations;
+      var translation = allTranslations[lang];
 
       if (!translation && lang !== 'en') {
         translation = allTranslations['en'];
       }
 
-      const transaltedText = translation && translation[text];
+      var transaltedText = translation && translation[text];
       return transaltedText ? transaltedText : '';
     }
-
   }, (_applyDecoratedDescriptor(_obj, "lang", [_tracking.tracked], (_init = Object.getOwnPropertyDescriptor(_obj, "lang"), _init = _init ? _init.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "isLangSetup", [_tracking.tracked], (_init2 = Object.getOwnPropertyDescriptor(_obj, "isLangSetup"), _init2 = _init2 ? _init2.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init2;
     }
   }), _obj), _applyDecoratedDescriptor(_obj, "allTranslations", [_tracking.tracked], (_init3 = Object.getOwnPropertyDescriptor(_obj, "allTranslations"), _init3 = _init3 ? _init3.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
-    initializer: function () {
+    initializer: function initializer() {
       return _init3;
     }
   }), _obj)), _obj));
@@ -2543,23 +2645,24 @@
   _exports.default = void 0;
   0; //eaimeta@70e063a35619d71f0,"@ember/service"eaimeta@70e063a35619d71f
 
-  var _default = _service.default.extend({
-    getCachedItem(item) {
-      let cachedItem;
+  function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-      if (typeof localStorage !== undefined) {
-        const boland = localStorage.getItem('boland');
-        const parsedBoland = boland && typeof boland === 'string' ? JSON.parse(boland) : boland;
+  var _default = _service.default.extend({
+    getCachedItem: function getCachedItem(item) {
+      var cachedItem;
+
+      if ((typeof localStorage === "undefined" ? "undefined" : _typeof(localStorage)) !== undefined) {
+        var boland = localStorage.getItem('boland');
+        var parsedBoland = boland && typeof boland === 'string' ? JSON.parse(boland) : boland;
         cachedItem = parsedBoland && parsedBoland['catch-the-mouse'] && parsedBoland['catch-the-mouse'][item];
       }
 
       return cachedItem;
     },
-
-    setCachedItem(item, value) {
-      if (typeof localStorage !== undefined) {
-        const boland = localStorage.getItem('boland');
-        let newBolandRecord = boland && typeof boland === 'string' ? JSON.parse(boland) : boland;
+    setCachedItem: function setCachedItem(item, value) {
+      if ((typeof localStorage === "undefined" ? "undefined" : _typeof(localStorage)) !== undefined) {
+        var boland = localStorage.getItem('boland');
+        var newBolandRecord = boland && typeof boland === 'string' ? JSON.parse(boland) : boland;
 
         if (!newBolandRecord || typeof newBolandRecord === 'string') {
           newBolandRecord = {};
@@ -2573,7 +2676,6 @@
         localStorage.setItem('boland', JSON.stringify(newBolandRecord));
       }
     }
-
   });
 
   _exports.default = _default;
@@ -2586,7 +2688,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _textMeasurer.default;
     }
   });
@@ -2618,7 +2720,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _basicDropdownContent.default;
     }
   });
@@ -2632,7 +2734,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _basicDropdownOptionalTag.default;
     }
   });
@@ -2646,7 +2748,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _basicDropdownTrigger.default;
     }
   });
@@ -2660,7 +2762,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _basicDropdown.default;
     }
   });
@@ -2764,7 +2866,7 @@
   });
   Object.defineProperty(_exports, "default", {
     enumerable: true,
-    get: function () {
+    get: function get() {
       return _calculatePosition.default;
     }
   });
@@ -2796,4 +2898,3 @@ catch(err) {
             require("catch-the-mouse/app")["default"].create({});
           }
         
-//# sourceMappingURL=catch-the-mouse.map
