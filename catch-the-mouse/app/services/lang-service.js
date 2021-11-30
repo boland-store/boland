@@ -40,7 +40,7 @@ export default Service.extend(Evented, {
       const langs = this.langs;
       const langsCount = langs && langs.length;
       langs && langs.length > 0 && langs.forEach(l => {
-        const translation = this.getJSON('/lang/strings_' + l + '.json').then(t => {
+        const translation = this.getJSON((location.href.includes('catch-the-mouse') ? (location.href + 'lang') : '/lang') + '/strings_' + l + '.json').then(t => {
           const allTranslations = this.allTranslations;
           if (isEmpty(allTranslations)) {
             allTranslations = {};

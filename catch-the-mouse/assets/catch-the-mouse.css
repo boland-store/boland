@@ -29,10 +29,10 @@
   bottom: -3rem;
 }
 .game-screen .info-panel .points-increased {
-  border-color: green;
+  color: green;
 }
 .game-screen .info-panel .points-decreased {
-  border-color: red;
+  color: red;
 }
 .game-screen .info-panel .points-timer-warning {
   color: red;
