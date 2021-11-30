@@ -1,0 +1,46 @@
+{
+  "name": "catch-the-mouse",
+  "version": "0.0.0",
+  "private": true,
+  "description": "©Boland | Catch The Mouse | boland.store@gmail.com",
+  "repository": "",
+  "license": "MIT",
+  "author": "",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "ember build",
+    "lint:hbs": "ember-template-lint .",
+    "lint:js": "eslint .",
+    "start": "ember serve",
+    "test": "ember test"
+  },
+  "devDependencies": {
+    "@ember/jquery": "^2.0.0",
+    "@ember/optional-features": "^2.0.0",
+    "babel-eslint": "^10.1.0",
+    "ember-auto-import": "^2.2.4",
+    "ember-cli": "3.28",
+    "ember-cli-babel": "^7.26.6",
+    "ember-cli-htmlbars": "^6.0.0",
+    "ember-cli-inject-live-reload": "^2.1.0",
+    "ember-cli-less": "^3.0.2",
+    "ember-composable-helpers": "^4.5.0",
+    "ember-load-initializers": "^2.1.2",
+    "ember-power-select": "^4.1.7",
+    "ember-resolver": "^8.0.3",
+    "ember-source": "^4.0.0",
+    "ember-truth-helpers": "^3.0.0",
+    "eslint-plugin-ember": "^10.5.8",
+    "loader.js": "^4.7.0",
+    "webpack": "^5.64.2"
+  },
+  "engines": {
+    "node": "6.* || 8.* || >= 10.*"
+  },
+  "ember": {
+    "edition": "octane"
+  }
+}
