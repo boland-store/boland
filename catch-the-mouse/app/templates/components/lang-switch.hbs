@@ -1,0 +1,11 @@
+<div class={{this.classNames}}>
+  <PowerSelect
+    @selected       = {{this.lang}}
+    @options        = {{this.langs}}
+    @onChange       = {{this.switchLang}}
+    @renderInPlace  = {{true}}
+    as |item|
+  >
+    {{item}}
+  </PowerSelect>
+</div>

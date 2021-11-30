@@ -1,0 +1,135 @@
+@charset "UTF-8";
+@import (once) "./components/index";
+@import (once) "./variables";
+
+html {
+  /**--------------------------------------------------------------------------
+  * 62.5% of 16px = 10px so 1.6rem = 16px
+  16px = usual default base font size of the browser
+  fontSizeSmall(=1.3rem) used as default font size in the app eqauls to 13px
+  --------------------------------------------------------------------------*/
+  font-size: @baseFontSizeRMCalc;
+
+  /**--------------------------------------------------------------------------
+  * for touch mode, the font-size is set to 78.125% in the code. $("html").css("font-size", '78.125%');
+  78.125% of 16px = 12.5px, so fontSizeSmall(=1.3rem) used in the app eqauls to 16.25px
+  16.25px is also the font size in the app (1.3rem) in the destkop mode after setting the font size in the browser to 20px (large in chrome)
+  --------------------------------------------------------------------------*/
+  //font-size: 78.125%;
+
+  height: 100%;
+}
+
+body {
+  font: normal @baseFontSize Helvetica, Arial, tahoma, sans-serif;
+  color: @baseColor;
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: @baseColorLight;
+  box-shadow: 0 0.4rem 0.4rem 0px @baseColorLight;
+  height: 2.8rem;
+  font-size: 1.8rem;
+  position: relative;
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: capitalize;
+    height: 2.8rem;
+  }
+  .lang-switch {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 0.4rem;
+    font-size: 1.2rem;
+    .ember-basic-dropdown, .ember-power-select-trigger, .ember-basic-dropdown-content {
+      border-color: @baseColor;
+    }
+    .ember-basic-dropdown, .ember-power-select-trigger {
+      height: 2rem;
+    }
+    .ember-power-select-status-icon {
+      border-color: @baseColor transparent transparent transparent;
+    }
+    .ember-power-select-option[aria-selected="true"] {
+      background-color: @baseColorLight;
+      color: @baseColor;
+    }
+    .ember-power-select-option[aria-current="true"] {
+      background-color: @baseColorVeryLight;
+      color: @baseColor;
+    }
+  }
+}
+
+#main {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: @baseColorLight;
+  box-shadow: 0 0.4rem 0.4rem 0px @baseColorLight;
+  height: 1.8rem;
+  font-size: 1.3rem;
+  position: relative;
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: capitalize;
+    height: 1.8rem;
+  }
+}
+
+.base-button {
+  border: 0.2rem solid @baseColor;
+  border-radius: 0.2rem;
+  background-color: @baseColor;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  &.floating-button-close {
+    position: absolute;
+    top: 0.8rem;
+    right: 0.8rem;
+  }
+  &.button-secondary {
+    background-color: white;
+    color: @baseColor;
+  }
+  &:disabled {
+    background-color: @baseDisabledColor;
+    border-color: @baseDisabledColor;
+  }
+  &.button-secondary:disabled {
+    background-color: white;
+    border-color: @baseDisabledColor;
+    color: @baseDisabledColor;
+  }
+}
+
+@import "ember-power-select";

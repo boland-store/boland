@@ -1,0 +1,12 @@
+<div class='info-panel'>
+  <span class='points {{this.pointsClass}}'>{{loc '_points'}}&nbsp;:&nbsp;{{this.points}}</span>&nbsp;|&nbsp;<span class='points-timer {{this.pointsTimeClass}}'>{{loc '_time'}}&nbsp;:&nbsp;{{this.time}}s</span>
+</div>
+<div class='gs-cheese'></div>
+{{game-char name='cat-1'}}
+{{game-char name='cat-2'}}
+{{game-char name='cat-3'}}
+{{game-char name='mouse-1'}}
+{{game-char name='mouse-2'}}
+{{game-char name='mouse-3'}}
+<div class='gs-cheese-base'></div>
+<button type='button' class='base-button floating-button-close' {{on 'click' this.endGame}}>&#215;</button>

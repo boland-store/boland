@@ -1,0 +1,9 @@
+<div class={{this.classNames}}>
+  {{#if this.gameScreen}}
+    {{game-screen}}
+  {{else if this.boardScreen}}
+    {{board-screen}}
+  {{else}}
+    <button type='button' class='base-button' {{on 'click' this.startGame}}>{{loc '_start_game'}}</button>
+  {{/if}}
+</div>
