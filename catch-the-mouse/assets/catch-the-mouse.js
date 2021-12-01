@@ -406,7 +406,7 @@
 
     endGame() {
       const gameService = this.gameService;
-      gameService && gameService.endGame();
+      gameService && gameService.openBoard();
     }
 
   }, (_applyDecoratedDescriptor(_obj, "endGame", [_object.action], Object.getOwnPropertyDescriptor(_obj, "endGame"), _obj)), _obj));
@@ -508,6 +508,11 @@
       gameService && gameService.startGame();
     }
 
+    openBoard() {
+      const gameService = this.gameService;
+      gameService && gameService.openBoard();
+    }
+
   }, (_descriptor = _applyDecoratedDescriptor(_class2.prototype, "gameService", [_service.inject], {
     configurable: true,
     enumerable: true,
@@ -523,7 +528,7 @@
     enumerable: true,
     writable: true,
     initializer: null
-  }), _applyDecoratedDescriptor(_class2.prototype, "startGame", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "startGame"), _class2.prototype)), _class2));
+  }), _applyDecoratedDescriptor(_class2.prototype, "startGame", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "startGame"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "openBoard", [_object.action], Object.getOwnPropertyDescriptor(_class2.prototype, "openBoard"), _class2.prototype)), _class2));
 
   _exports.default = _class;
 });
@@ -2297,7 +2302,7 @@
         this.time = this.time - 1;
 
         if (this.time < 1) {
-          this.endGame();
+          this.openBoard();
         } else {
           this.handleTimer();
         }
@@ -2330,7 +2335,7 @@
       this.handleTimer();
     },
 
-    endGame() {
+    openBoard() {
       this.gameScreen = false;
       this.boardScreen = true;
     },
@@ -2673,8 +2678,8 @@
   0; //eaimeta@70e063a35619d71f0,"@ember/template-factory"eaimeta@70e063a35619d71f
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "xFPBm0eH",
-    "block": "[[[41,[30,0,[\"showScore\"]],[[[1,\"  \"],[10,0],[14,0,\"info-panel\"],[12],[1,\"\\n    \"],[11,\"button\"],[24,0,\"base-button floating-button-close\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"showBoard\"]]],null],[12],[1,\"×\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points-title\"],[12],[1,[28,[35,2],[\"_your_score\"],null]],[1,\":\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points\"],[12],[1,[30,0,[\"points\"]]],[13],[1,\"\\n    \"],[10,1],[14,0,\"name\"],[12],[8,[39,3],null,[[\"@placeholder\",\"@type\",\"@value\"],[[28,[37,2],[\"_name\"],null],\"text\",[30,0,[\"user\"]]]],null],[13],[1,\"\\n    \"],[10,0],[14,0,\"points-buttons\"],[12],[1,\"\\n      \"],[11,\"button\"],[16,\"disabled\",[28,[37,4],[[30,0,[\"user\"]]],null]],[24,0,\"base-button\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"saveScore\"]]],null],[12],[1,[28,[35,2],[\"_save\"],null]],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],[[[1,\"  \"],[10,0],[14,0,\"board-panel\"],[12],[1,\"\\n    \"],[11,\"button\"],[24,0,\"base-button floating-button-close\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"goHome\"]]],null],[12],[1,\"×\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points-title\"],[12],[1,[28,[35,2],[\"_score_board\"],null]],[13],[1,\"\\n    \"],[10,0],[14,0,\"points-records\"],[12],[1,\"\\n\"],[42,[28,[37,6],[[28,[37,6],[[30,0,[\"records\"]]],null]],null],null,[[[1,\"        \"],[10,0],[14,0,\"points-record\"],[12],[10,1],[12],[1,[30,1,[\"user\"]]],[13],[10,1],[12],[1,\":\"],[13],[10,1],[12],[1,[30,1,[\"points\"]]],[13],[13],[1,\"\\n\"]],[1]],null],[1,\"    \"],[13],[1,\"\\n    \"],[10,0],[14,0,\"points-buttons\"],[12],[1,\"\\n      \"],[11,\"button\"],[24,0,\"base-button button-secondary\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"resetCachedPoints\"]]],null],[12],[1,[28,[35,2],[\"_reset\"],null]],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]]]],[\"record\"],false,[\"if\",\"on\",\"loc\",\"input\",\"not\",\"each\",\"-track-array\"]]",
+    "id": "EJpiMpnH",
+    "block": "[[[41,[30,0,[\"showScore\"]],[[[1,\"  \"],[10,0],[14,0,\"info-panel\"],[12],[1,\"\\n    \"],[11,\"button\"],[24,0,\"base-button floating-button-close\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"showBoard\"]]],null],[12],[1,\"×\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points-title\"],[12],[1,[28,[35,2],[\"_your_score\"],null]],[1,\":\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points\"],[12],[1,[30,0,[\"points\"]]],[13],[1,\"\\n    \"],[10,1],[14,0,\"name\"],[12],[8,[39,3],null,[[\"@placeholder\",\"@type\",\"@value\"],[[28,[37,2],[\"_name\"],null],\"text\",[30,0,[\"user\"]]]],null],[13],[1,\"\\n    \"],[10,0],[14,0,\"points-buttons\"],[12],[1,\"\\n      \"],[11,\"button\"],[16,\"disabled\",[28,[37,4],[[30,0,[\"user\"]]],null]],[24,0,\"base-button\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"saveScore\"]]],null],[12],[1,[28,[35,2],[\"_save\"],null]],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],[[[1,\"  \"],[10,0],[14,0,\"board-panel\"],[12],[1,\"\\n    \"],[11,\"button\"],[24,0,\"base-button floating-button-close\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"goHome\"]]],null],[12],[1,\"×\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points-title\"],[12],[1,[28,[35,2],[\"_score_board\"],null]],[13],[1,\"\\n    \"],[10,0],[14,0,\"points-records\"],[12],[1,\"\\n\"],[42,[28,[37,6],[[28,[37,6],[[30,0,[\"records\"]]],null]],null],null,[[[1,\"        \"],[10,0],[14,0,\"points-record\"],[12],[10,1],[12],[1,[30,1,[\"user\"]]],[13],[10,1],[12],[1,\":\"],[13],[10,1],[12],[1,[30,1,[\"points\"]]],[13],[13],[1,\"\\n\"]],[1]],null],[1,\"    \"],[13],[1,\"\\n    \"],[10,0],[14,0,\"points-buttons\"],[12],[1,\"\\n      \"],[11,\"button\"],[24,0,\"base-button secondary-button\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"resetCachedPoints\"]]],null],[12],[1,[28,[35,2],[\"_reset\"],null]],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]]]],[\"record\"],false,[\"if\",\"on\",\"loc\",\"input\",\"not\",\"each\",\"-track-array\"]]",
     "moduleName": "catch-the-mouse/templates/components/board-screen.hbs",
     "isStrictMode": false
   });
@@ -2745,8 +2750,8 @@
   0; //eaimeta@70e063a35619d71f0,"@ember/template-factory"eaimeta@70e063a35619d71f
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "JZRBMSfR",
-    "block": "[[[10,0],[15,0,[30,0,[\"classNames\"]]],[12],[1,\"\\n\"],[41,[30,0,[\"gameScreen\"]],[[[1,\"    \"],[1,[34,1]],[1,\"\\n\"]],[]],[[[41,[30,0,[\"boardScreen\"]],[[[1,\"    \"],[1,[34,2]],[1,\"\\n\"]],[]],[[[1,\"    \"],[11,\"button\"],[24,0,\"base-button\"],[24,4,\"button\"],[4,[38,3],[\"click\",[30,0,[\"startGame\"]]],null],[12],[1,[28,[35,4],[\"_start_game\"],null]],[13],[1,\"\\n  \"]],[]]]],[]]],[13],[1,\"\\n\"]],[],false,[\"if\",\"game-screen\",\"board-screen\",\"on\",\"loc\"]]",
+    "id": "1iPpxySA",
+    "block": "[[[10,0],[15,0,[30,0,[\"classNames\"]]],[12],[1,\"\\n\"],[41,[30,0,[\"gameScreen\"]],[[[1,\"    \"],[1,[34,1]],[1,\"\\n\"]],[]],[[[41,[30,0,[\"boardScreen\"]],[[[1,\"    \"],[1,[34,2]],[1,\"\\n\"]],[]],[[[1,\"    \"],[10,0],[14,0,\"main-screen-buttons\"],[12],[1,\"\\n      \"],[11,\"button\"],[24,0,\"base-button\"],[24,4,\"button\"],[4,[38,3],[\"click\",[30,0,[\"startGame\"]]],null],[12],[1,[28,[35,4],[\"_start_game\"],null]],[13],[1,\"\\n      \"],[11,\"button\"],[24,0,\"base-button secondary-button\"],[24,4,\"button\"],[4,[38,3],[\"click\",[30,0,[\"openBoard\"]]],null],[12],[1,[28,[35,4],[\"_points\"],null]],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]],[]]],[13],[1,\"\\n\"]],[],false,[\"if\",\"game-screen\",\"board-screen\",\"on\",\"loc\"]]",
     "moduleName": "catch-the-mouse/templates/components/main-screen.hbs",
     "isStrictMode": false
   });

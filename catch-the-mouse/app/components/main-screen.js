@@ -18,4 +18,10 @@ export default class extends Component {
     const gameService = this.gameService;
     gameService && gameService.startGame();
   }
+
+  @action
+  openBoard() {
+    const gameService = this.gameService;
+    gameService && gameService.openBoard();
+  }
 }

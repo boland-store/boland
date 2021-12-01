@@ -62,7 +62,7 @@ export default Service.extend(Evented, {
       }
       this.time = this.time - 1;
       if (this.time < 1) {
-        this.endGame();
+        this.openBoard();
       }
       else {
         this.handleTimer();
@@ -94,7 +94,7 @@ export default Service.extend(Evented, {
     this.handleTimer();
   },
 
-  endGame() {
+  openBoard() {
     this.gameScreen = false;
     this.boardScreen = true;
   },

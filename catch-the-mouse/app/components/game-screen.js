@@ -26,6 +26,6 @@ export default Component.extend({
   @action
   endGame() {
     const gameService = this.gameService;
-    gameService && gameService.endGame();
+    gameService && gameService.openBoard();
   }
 });

@@ -128,13 +128,17 @@ body {
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
+  &:not(.floating-button-close) {
+    padding: 0.4rem 0.8rem;
+    min-width: 10rem;
+  }
   cursor: pointer;
   &.floating-button-close {
     position: absolute;
     top: 0.8rem;
     right: 0.8rem;
   }
-  &.button-secondary {
+  &.secondary-button {
     background-color: white;
     color: @baseColor;
   }
@@ -142,7 +146,7 @@ body {
     background-color: @baseDisabledColor;
     border-color: @baseDisabledColor;
   }
-  &.button-secondary:disabled {
+  &.secondary-button:disabled {
     background-color: white;
     border-color: @baseDisabledColor;
     color: @baseDisabledColor;

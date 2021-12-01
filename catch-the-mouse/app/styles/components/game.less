@@ -8,6 +8,15 @@
   .title {
     text-transform: capitalize;
   }
+  .main-screen-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    .base-button ~ .base-button {
+      margin-top: 1.8rem;
+    }
+  }
 }
 
 .game-screen {
@@ -23,6 +32,7 @@
     position: absolute;
     border: 0.2rem solid @baseColor;
     border-radius: 0.2rem;
+    background-color: @baseColorVeryLight;
     text-transform: capitalize;
     padding: 0.4rem;
     bottom: -3rem;
@@ -166,7 +176,7 @@
     .name {
       width: 100%;
       height: 2rem;
-      padding: 0.4rem 0;
+      padding: 0.4rem;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -179,7 +189,6 @@
 
     .points-buttons {
       width: 100%;
-      height: 2rem;
       padding: 0.4rem 0;
       display: flex;
       justify-content: space-around;

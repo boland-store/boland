@@ -10,6 +10,15 @@
 .main-screen .title {
   text-transform: capitalize;
 }
+.main-screen .main-screen-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.main-screen .main-screen-buttons .base-button ~ .base-button {
+  margin-top: 1.8rem;
+}
 .game-screen {
   flex-grow: 1;
   width: auto;
@@ -24,6 +33,7 @@
   position: absolute;
   border: 0.2rem solid brown;
   border-radius: 0.2rem;
+  background-color: #fff3e9;
   text-transform: capitalize;
   padding: 0.4rem;
   bottom: -3rem;
@@ -154,7 +164,7 @@
 .board-screen .info-panel .name {
   width: 100%;
   height: 2rem;
-  padding: 0.4rem 0;
+  padding: 0.4rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -168,7 +178,6 @@
 .board-screen .board-panel .points-buttons,
 .board-screen .info-panel .points-buttons {
   width: 100%;
-  height: 2rem;
   padding: 0.4rem 0;
   display: flex;
   justify-content: space-around;
@@ -300,12 +309,16 @@ body {
   text-transform: uppercase;
   cursor: pointer;
 }
+.base-button:not(.floating-button-close) {
+  padding: 0.4rem 0.8rem;
+  min-width: 10rem;
+}
 .base-button.floating-button-close {
   position: absolute;
   top: 0.8rem;
   right: 0.8rem;
 }
-.base-button.button-secondary {
+.base-button.secondary-button {
   background-color: white;
   color: brown;
 }
@@ -313,7 +326,7 @@ body {
   background-color: #877b70;
   border-color: #877b70;
 }
-.base-button.button-secondary:disabled {
+.base-button.secondary-button:disabled {
   background-color: white;
   border-color: #877b70;
   color: #877b70;
