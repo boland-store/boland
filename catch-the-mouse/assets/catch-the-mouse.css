@@ -251,8 +251,10 @@ body {
 }
 #bck {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: center center url(images/cheese-part-bck.svg);
   filter: blur(0.8rem);
   -webkit-filter: blur(0.8rem);
@@ -272,7 +274,7 @@ body {
   background-color: #fddabc;
   box-shadow: 0 0.4rem 0.4rem 0px #fddabc;
   height: 1.8rem;
-  font-size: 1.3rem;
+  font-size: 1rem;
   position: relative;
 }
 #footer .title {
@@ -281,6 +283,10 @@ body {
   justify-content: center;
   text-transform: capitalize;
   height: 1.8rem;
+  color: brown;
+}
+#footer a {
+  color: brown;
 }
 .base-button {
   border: 0.2rem solid brown;
