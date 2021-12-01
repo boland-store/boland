@@ -248,6 +248,7 @@
       const animationTime = Math.floor(Math.random() * 1250) + 500;
       const element = this.element;
       const imageElement = element && element.getElementsByClassName('gs-char-image')[0];
+      this.allowedClick = true;
 
       if (element && element.style) {
         element.style.left = left + '%';
@@ -258,8 +259,6 @@
           imageElement.style.top = '0';
           imageElement.style.transitionDuration = animationTime / 1000 + 's';
         }
-
-        this.allowedClick = true;
       } // show char
 
 
@@ -326,12 +325,13 @@
     },
 
     handleClick() {
-      if (this.allowedClick) {
-        this.allowedClick = false;
-      } else {
+      if (!this.allowedClick) {
         return;
       }
 
+      this.allowedClick = false;
+      const gameService = this.gameService;
+      gameService && this.type === 'mouse' && gameService.incrementPoints() || this.type === 'cat' && gameService.decrementPoints();
       const element = this.element;
       const imageElement = element && element.getElementsByClassName('gs-char-image')[0];
 
@@ -339,9 +339,6 @@
         imageElement.style.transitionDuration = '0.25s';
         imageElement.style.top = '100%';
       }
-
-      const gameService = this.gameService;
-      gameService && this.type === 'mouse' && gameService.incrementPoints() || this.type === 'cat' && gameService.decrementPoints();
     }
 
   }, (_applyDecoratedDescriptor(_obj, "type", [_tracking.tracked], (_init = Object.getOwnPropertyDescriptor(_obj, "type"), _init = _init ? _init.value : undefined, {
@@ -2602,8 +2599,8 @@
   0; //eaimeta@70e063a35619d71f0,"@ember/template-factory"eaimeta@70e063a35619d71f
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "hBv3hNmC",
-    "block": "[[[10,0],[14,1,\"header\"],[12],[1,\"\\n  \"],[10,1],[14,0,\"title\"],[12],[1,[28,[35,0],[\"_main_title\"],null]],[13],[1,\"\\n  \"],[1,[34,1]],[1,\"\\n\"],[13],[1,\"\\n\"],[10,0],[14,1,\"main\"],[12],[1,\"\\n  \"],[1,[34,2]],[1,\"\\n\"],[13],[1,\"\\n\"],[10,0],[14,1,\"footer\"],[12],[1,\"\\n  \"],[10,1],[14,0,\"title\"],[12],[1,\"© 2021 Boland - \"],[13],[1,\"\\n  \"],[10,3],[14,6,\"mailto:boland.store@gmail.com\"],[12],[1,\"boland.store@gmail.com\"],[13],[1,\"\\n  \"],[10,1],[14,0,\"title\"],[12],[1,\" - \"],[1,[28,[35,0],[\"_all_rights_reserved\"],null]],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[],false,[\"loc\",\"lang-switch\",\"main-screen\"]]",
+    "id": "WZpOq90o",
+    "block": "[[[10,0],[14,1,\"bck\"],[12],[13],[1,\"\\n\"],[10,0],[14,1,\"header\"],[12],[1,\"\\n  \"],[10,1],[14,0,\"title\"],[12],[1,[28,[35,0],[\"_main_title\"],null]],[13],[1,\"\\n  \"],[1,[34,1]],[1,\"\\n\"],[13],[1,\"\\n\"],[10,0],[14,1,\"main\"],[12],[1,\"\\n  \"],[1,[34,2]],[1,\"\\n\"],[13],[1,\"\\n\"],[10,0],[14,1,\"footer\"],[12],[1,\"\\n  \"],[10,1],[14,0,\"title\"],[12],[1,\"© 2021 Boland - \"],[13],[1,\"\\n  \"],[10,3],[14,6,\"mailto:boland.store@gmail.com\"],[12],[1,\"boland.store@gmail.com\"],[13],[1,\"\\n  \"],[10,1],[14,0,\"title\"],[12],[1,\" - \"],[1,[28,[35,0],[\"_all_rights_reserved\"],null]],[13],[1,\"\\n\"],[13],[1,\"\\n\"]],[],false,[\"loc\",\"lang-switch\",\"main-screen\"]]",
     "moduleName": "catch-the-mouse/templates/application.hbs",
     "isStrictMode": false
   });

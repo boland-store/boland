@@ -35,6 +35,7 @@ export default Component.extend({
     const animationTime = (Math.floor(Math.random() * 1250)) + 500;
     const element = this.element;
     const imageElement = element && element.getElementsByClassName('gs-char-image')[0];
+    this.allowedClick = true;
     if (element && element.style) {
       element.style.left = left + '%';
       element.style.bottom = bottom + '%';
@@ -44,7 +45,6 @@ export default Component.extend({
         imageElement.style.top = '0';
         imageElement.style.transitionDuration = (animationTime / 1000) + 's';
       }
-      this.allowedClick = true;
     }
     // show char
     setTimeout(() => {
@@ -101,19 +101,17 @@ export default Component.extend({
 
   @action
   handleClick() {
-    if (this.allowedClick) {
-      this.allowedClick = false;
-    }
-    else {
+    if (!this.allowedClick) {
       return;
     }
+    this.allowedClick = false;
+    const gameService = this.gameService;
+    gameService && (this.type === 'mouse' && gameService.incrementPoints()) || this.type === 'cat' && gameService.decrementPoints();
     const element = this.element;
     const imageElement = element && element.getElementsByClassName('gs-char-image')[0];
     if (imageElement && imageElement.style) {
       imageElement.style.transitionDuration = '0.25s';
       imageElement.style.top = '100%';
     }
-    const gameService = this.gameService;
-    gameService && (this.type === 'mouse' && gameService.incrementPoints()) || this.type === 'cat' && gameService.decrementPoints();
   }
 });
