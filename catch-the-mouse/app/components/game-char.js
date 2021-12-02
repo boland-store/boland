@@ -42,6 +42,7 @@ export default Component.extend({
       element.style.transform = 'rotate(' + rotate + 'deg)';
 
       if (imageElement && imageElement.style) {
+        imageElement.style.pointerEvents = 'all';
         imageElement.style.top = '0';
         imageElement.style.transitionDuration = (animationTime / 1000) + 's';
       }
@@ -112,6 +113,7 @@ export default Component.extend({
     if (imageElement && imageElement.style) {
       imageElement.style.transitionDuration = '0.25s';
       imageElement.style.top = '100%';
+      imageElement.style.pointerEvents = 'none';
     }
   }
 });

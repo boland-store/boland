@@ -6,6 +6,7 @@
   {{else}}
     <div class='main-screen-buttons'>
       <button type='button' class='base-button' {{on 'click' this.startGame}}>{{loc '_start_game'}}</button>
+      <button type='button' class='base-button secondary-button' {{on 'click' (fn this.startGame true)}}>{{loc '_training'}}</button>
       <button type='button' class='base-button secondary-button' {{on 'click' this.openBoard}}>{{loc '_points'}}</button>
     </div>
   {{/if}}

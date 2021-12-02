@@ -146,6 +146,7 @@
     records: [],
     points: (0, _computed.alias)('gameService.points'),
     isPlaying: (0, _computed.alias)('gameService.isPlaying'),
+    isTraining: (0, _computed.alias)('gameService.isTraining'),
     showScore: (0, _object.computed)('isPlaying', 'confirmedDialog', function () {
       const confirmedDialog = this.confirmedDialog;
       const isPlaying = this.isPlaying;
@@ -157,15 +158,24 @@
 
       (0, _object.set)(this, 'confirmedDialog', false);
       const localStorageService = this.localStorageService;
-      const records = localStorageService && localStorageService.getCachedItem('records');
+      let records = localStorageService && localStorageService.getCachedItem('records');
+
+      if (!records) {
+        records = [];
+      }
 
       if (records) {
+        records = this.topRecords(records);
         (0, _object.set)(this, 'records', records);
       }
     },
 
     showBoard() {
       (0, _object.set)(this, 'confirmedDialog', true);
+
+      if (this.isTraining) {
+        this.goHome();
+      }
     },
 
     saveScore() {
@@ -177,6 +187,29 @@
       };
       let records = this.records ? this.records : [];
       records.pushObject(newRecord);
+      records = this.topRecords(records);
+      const localStorageService = this.localStorageService;
+      localStorageService && localStorageService.setCachedItem('records', records);
+      (0, _object.set)(this, 'records', records);
+      (0, _object.set)(this, 'confirmedDialog', true);
+    },
+
+    topRecords(customRecords) {
+      let records = customRecords ? customRecords : this.records;
+
+      if (!records) {
+        records = [];
+      }
+
+      if (records.length < 5) {
+        let i;
+        const newItemsCount = 5 - records.length;
+
+        for (i = 0; i < newItemsCount; i = i + 1) {
+          records.pushObject({});
+        }
+      }
+
       records = records.sortBy('points');
 
       if (records.length > 5) {
@@ -184,10 +217,10 @@
       }
 
       records = records.reverse();
-      const localStorageService = this.localStorageService;
-      localStorageService && localStorageService.setCachedItem('records', records);
-      (0, _object.set)(this, 'records', records);
-      (0, _object.set)(this, 'confirmedDialog', true);
+      records.forEach((record, index) => {
+        record.num = index + 1;
+      });
+      return records;
     },
 
     goHome() {
@@ -197,7 +230,7 @@
 
     resetCachedPoints() {
       const localStorageService = this.localStorageService;
-      const records = [];
+      const records = this.topRecords([]);
       localStorageService && localStorageService.setCachedItem('records', records);
       (0, _object.set)(this, 'records', records);
     }
@@ -256,6 +289,7 @@
         element.style.transform = 'rotate(' + rotate + 'deg)';
 
         if (imageElement && imageElement.style) {
+          imageElement.style.pointerEvents = 'all';
           imageElement.style.top = '0';
           imageElement.style.transitionDuration = animationTime / 1000 + 's';
         }
@@ -338,6 +372,7 @@
       if (imageElement && imageElement.style) {
         imageElement.style.transitionDuration = '0.25s';
         imageElement.style.top = '100%';
+        imageElement.style.pointerEvents = 'none';
       }
     }
 
@@ -392,6 +427,7 @@
     gameService: (0, _service.inject)(),
     points: (0, _computed.alias)('gameService.points'),
     time: (0, _computed.alias)('gameService.time'),
+    isTraining: (0, _computed.alias)('gameService.isTraining'),
     pointsClass: (0, _object.computed)('gameService.pointState', 'points', function () {
       const gameService = this.gameService;
       const pointState = gameService && gameService.pointState;
@@ -503,9 +539,9 @@
       _initializerDefineProperty(this, "boardScreen", _descriptor3, this);
     }
 
-    startGame() {
+    startGame(training) {
       const gameService = this.gameService;
-      gameService && gameService.startGame();
+      gameService && gameService.startGame(training);
     }
 
     openBoard() {
@@ -2196,7 +2232,7 @@
   });
   _exports.default = void 0;
 
-  var _obj, _init, _init2, _init3, _init4, _init5, _init6, _init7;
+  var _obj, _init, _init2, _init3, _init4, _init5, _init6, _init7, _init8;
 
   0; //eaimeta@70e063a35619d71f0,"ember",0,"@ember/service",0,"@ember/object/evented",0,"@glimmer/tracking"eaimeta@70e063a35619d71f
 
@@ -2209,10 +2245,11 @@
     time: 30,
     pointState: undefined,
     isPlaying: false,
+    isTraining: false,
     gameScreen: false,
     boardScreen: false,
     gates: [{
-      left: -5,
+      left: -3,
       bottom: 37,
       rotate: 299,
       occupied: false
@@ -2294,6 +2331,10 @@
     },
 
     handleTimer() {
+      if (this.isTraining) {
+        return;
+      }
+
       setTimeout(() => {
         if (this.isDestroyed || this.isDestroying || !this.gameScreen) {
           return;
@@ -2314,11 +2355,11 @@
       const freeGates = gates && gates.length > 0 && gates.filterBy('occupied', false);
       const freeGateIndex = freeGates && freeGates.length > 0 && Math.floor(Math.random() * freeGates.length);
 
-      if (freeGateIndex && freeGates[freeGateIndex]) {
+      if (freeGateIndex >= 0 && freeGates[freeGateIndex]) {
         freeGates[freeGateIndex].occupied = true;
       }
 
-      return freeGateIndex && freeGates[freeGateIndex];
+      return freeGateIndex >= 0 && freeGates[freeGateIndex];
     },
 
     unlockGate(gate) {
@@ -2327,8 +2368,9 @@
       }
     },
 
-    startGame() {
+    startGame(training) {
       this.isPlaying = true;
+      this.isTraining = training === true;
       this.gameScreen = true;
       this.resetPoints();
       this.resetTime();
@@ -2342,6 +2384,7 @@
 
     goHome() {
       this.isPlaying = false;
+      this.isTraining = false;
       this.boardScreen = false;
       this.gameScreen = false;
     }
@@ -2374,26 +2417,33 @@
     initializer: function () {
       return _init4;
     }
-  }), _obj), _applyDecoratedDescriptor(_obj, "gameScreen", [_tracking.tracked], (_init5 = Object.getOwnPropertyDescriptor(_obj, "gameScreen"), _init5 = _init5 ? _init5.value : undefined, {
+  }), _obj), _applyDecoratedDescriptor(_obj, "isTraining", [_tracking.tracked], (_init5 = Object.getOwnPropertyDescriptor(_obj, "isTraining"), _init5 = _init5 ? _init5.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
     initializer: function () {
       return _init5;
     }
-  }), _obj), _applyDecoratedDescriptor(_obj, "boardScreen", [_tracking.tracked], (_init6 = Object.getOwnPropertyDescriptor(_obj, "boardScreen"), _init6 = _init6 ? _init6.value : undefined, {
+  }), _obj), _applyDecoratedDescriptor(_obj, "gameScreen", [_tracking.tracked], (_init6 = Object.getOwnPropertyDescriptor(_obj, "gameScreen"), _init6 = _init6 ? _init6.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
     initializer: function () {
       return _init6;
     }
-  }), _obj), _applyDecoratedDescriptor(_obj, "gates", [_tracking.tracked], (_init7 = Object.getOwnPropertyDescriptor(_obj, "gates"), _init7 = _init7 ? _init7.value : undefined, {
+  }), _obj), _applyDecoratedDescriptor(_obj, "boardScreen", [_tracking.tracked], (_init7 = Object.getOwnPropertyDescriptor(_obj, "boardScreen"), _init7 = _init7 ? _init7.value : undefined, {
     enumerable: true,
     configurable: true,
     writable: true,
     initializer: function () {
       return _init7;
+    }
+  }), _obj), _applyDecoratedDescriptor(_obj, "gates", [_tracking.tracked], (_init8 = Object.getOwnPropertyDescriptor(_obj, "gates"), _init8 = _init8 ? _init8.value : undefined, {
+    enumerable: true,
+    configurable: true,
+    writable: true,
+    initializer: function () {
+      return _init8;
     }
   }), _obj)), _obj));
 
@@ -2546,13 +2596,23 @@
   0; //eaimeta@70e063a35619d71f0,"@ember/service"eaimeta@70e063a35619d71f
 
   var _default = _service.default.extend({
+    general: ['lang'],
+
     getCachedItem(item) {
       let cachedItem;
 
       if (typeof localStorage !== undefined) {
         const boland = localStorage.getItem('boland');
         const parsedBoland = boland && typeof boland === 'string' ? JSON.parse(boland) : boland;
-        cachedItem = parsedBoland && parsedBoland['catch-the-mouse'] && parsedBoland['catch-the-mouse'][item];
+        const general = this.general;
+
+        if (general && general.length > 0 && general.includes(item)) {
+          cachedItem = parsedBoland && parsedBoland[item];
+        }
+
+        if (!cachedItem) {
+          cachedItem = parsedBoland && parsedBoland['catch-the-mouse'] && parsedBoland['catch-the-mouse'][item];
+        }
       }
 
       return cachedItem;
@@ -2571,7 +2631,14 @@
           newBolandRecord['catch-the-mouse'] = {};
         }
 
-        newBolandRecord['catch-the-mouse'][item] = value;
+        const general = this.general;
+
+        if (general && general.length > 0 && general.includes(item)) {
+          newBolandRecord[item] = value;
+        } else {
+          newBolandRecord['catch-the-mouse'][item] = value;
+        }
+
         localStorage.setItem('boland', JSON.stringify(newBolandRecord));
       }
     }
@@ -2678,8 +2745,8 @@
   0; //eaimeta@70e063a35619d71f0,"@ember/template-factory"eaimeta@70e063a35619d71f
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "EJpiMpnH",
-    "block": "[[[41,[30,0,[\"showScore\"]],[[[1,\"  \"],[10,0],[14,0,\"info-panel\"],[12],[1,\"\\n    \"],[11,\"button\"],[24,0,\"base-button floating-button-close\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"showBoard\"]]],null],[12],[1,\"×\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points-title\"],[12],[1,[28,[35,2],[\"_your_score\"],null]],[1,\":\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points\"],[12],[1,[30,0,[\"points\"]]],[13],[1,\"\\n    \"],[10,1],[14,0,\"name\"],[12],[8,[39,3],null,[[\"@placeholder\",\"@type\",\"@value\"],[[28,[37,2],[\"_name\"],null],\"text\",[30,0,[\"user\"]]]],null],[13],[1,\"\\n    \"],[10,0],[14,0,\"points-buttons\"],[12],[1,\"\\n      \"],[11,\"button\"],[16,\"disabled\",[28,[37,4],[[30,0,[\"user\"]]],null]],[24,0,\"base-button\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"saveScore\"]]],null],[12],[1,[28,[35,2],[\"_save\"],null]],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]],[[[1,\"  \"],[10,0],[14,0,\"board-panel\"],[12],[1,\"\\n    \"],[11,\"button\"],[24,0,\"base-button floating-button-close\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"goHome\"]]],null],[12],[1,\"×\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points-title\"],[12],[1,[28,[35,2],[\"_score_board\"],null]],[13],[1,\"\\n    \"],[10,0],[14,0,\"points-records\"],[12],[1,\"\\n\"],[42,[28,[37,6],[[28,[37,6],[[30,0,[\"records\"]]],null]],null],null,[[[1,\"        \"],[10,0],[14,0,\"points-record\"],[12],[10,1],[12],[1,[30,1,[\"user\"]]],[13],[10,1],[12],[1,\":\"],[13],[10,1],[12],[1,[30,1,[\"points\"]]],[13],[13],[1,\"\\n\"]],[1]],null],[1,\"    \"],[13],[1,\"\\n    \"],[10,0],[14,0,\"points-buttons\"],[12],[1,\"\\n      \"],[11,\"button\"],[24,0,\"base-button secondary-button\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"resetCachedPoints\"]]],null],[12],[1,[28,[35,2],[\"_reset\"],null]],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]]]],[\"record\"],false,[\"if\",\"on\",\"loc\",\"input\",\"not\",\"each\",\"-track-array\"]]",
+    "id": "cp8+U+54",
+    "block": "[[[41,[30,0,[\"showScore\"]],[[[1,\"  \"],[10,0],[14,0,\"info-panel\"],[12],[1,\"\\n    \"],[11,\"button\"],[24,0,\"base-button floating-button-close\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"showBoard\"]]],null],[12],[1,\"×\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points-title\"],[12],[1,[28,[35,2],[\"_your_score\"],null]],[1,\":\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points\"],[12],[1,[30,0,[\"points\"]]],[13],[1,\"\\n\"],[41,[28,[37,3],[[30,0,[\"isTraining\"]]],null],[[[1,\"      \"],[10,1],[14,0,\"name\"],[12],[8,[39,4],null,[[\"@placeholder\",\"@type\",\"@value\"],[[28,[37,2],[\"_name\"],null],\"text\",[30,0,[\"user\"]]]],null],[13],[1,\"\\n      \"],[10,0],[14,0,\"points-buttons\"],[12],[1,\"\\n        \"],[11,\"button\"],[16,\"disabled\",[28,[37,3],[[30,0,[\"user\"]]],null]],[24,0,\"base-button\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"saveScore\"]]],null],[12],[1,[28,[35,2],[\"_save\"],null]],[13],[1,\"\\n      \"],[13],[1,\"\\n\"]],[]],null],[1,\"  \"],[13],[1,\"\\n\"]],[]],[[[1,\"  \"],[10,0],[14,0,\"board-panel\"],[12],[1,\"\\n    \"],[11,\"button\"],[24,0,\"base-button floating-button-close\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"goHome\"]]],null],[12],[1,\"×\"],[13],[1,\"\\n    \"],[10,1],[14,0,\"points-title\"],[12],[1,[28,[35,2],[\"_score_board\"],null]],[13],[1,\"\\n    \"],[10,0],[14,0,\"points-records\"],[12],[1,\"\\n\"],[42,[28,[37,6],[[28,[37,6],[[30,0,[\"records\"]]],null]],null],null,[[[1,\"        \"],[10,0],[14,0,\"points-record\"],[12],[10,1],[12],[1,[30,1,[\"num\"]]],[1,\". \"],[1,[30,1,[\"user\"]]],[13],[10,1],[12],[1,[30,1,[\"points\"]]],[13],[13],[1,\"\\n\"]],[1]],null],[1,\"    \"],[13],[1,\"\\n    \"],[10,0],[14,0,\"points-buttons\"],[12],[1,\"\\n      \"],[11,\"button\"],[24,0,\"base-button secondary-button\"],[24,4,\"button\"],[4,[38,1],[\"click\",[30,0,[\"resetCachedPoints\"]]],null],[12],[1,[28,[35,2],[\"_reset\"],null]],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"],[13],[1,\"\\n\"]],[]]]],[\"record\"],false,[\"if\",\"on\",\"loc\",\"not\",\"input\",\"each\",\"-track-array\"]]",
     "moduleName": "catch-the-mouse/templates/components/board-screen.hbs",
     "isStrictMode": false
   });
@@ -2714,8 +2781,8 @@
   0; //eaimeta@70e063a35619d71f0,"@ember/template-factory"eaimeta@70e063a35619d71f
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "DfblBAqY",
-    "block": "[[[10,0],[14,0,\"info-panel\"],[12],[1,\"\\n  \"],[10,1],[15,0,[29,[\"points \",[30,0,[\"pointsClass\"]]]]],[12],[1,[28,[35,0],[\"_points\"],null]],[1,\" : \"],[1,[30,0,[\"points\"]]],[13],[1,\" | \"],[10,1],[15,0,[29,[\"points-timer \",[30,0,[\"pointsTimeClass\"]]]]],[12],[1,[28,[35,0],[\"_time\"],null]],[1,\" : \"],[1,[30,0,[\"time\"]]],[1,\"s\"],[13],[1,\"\\n\"],[13],[1,\"\\n\"],[10,0],[14,0,\"gs-cheese\"],[12],[13],[1,\"\\n\"],[1,[28,[35,1],null,[[\"name\"],[\"cat-1\"]]]],[1,\"\\n\"],[1,[28,[35,1],null,[[\"name\"],[\"cat-2\"]]]],[1,\"\\n\"],[1,[28,[35,1],null,[[\"name\"],[\"cat-3\"]]]],[1,\"\\n\"],[1,[28,[35,1],null,[[\"name\"],[\"mouse-1\"]]]],[1,\"\\n\"],[1,[28,[35,1],null,[[\"name\"],[\"mouse-2\"]]]],[1,\"\\n\"],[1,[28,[35,1],null,[[\"name\"],[\"mouse-3\"]]]],[1,\"\\n\"],[10,0],[14,0,\"gs-cheese-base\"],[12],[13],[1,\"\\n\"],[11,\"button\"],[24,0,\"base-button floating-button-close\"],[24,4,\"button\"],[4,[38,2],[\"click\",[30,0,[\"endGame\"]]],null],[12],[1,\"×\"],[13],[1,\"\\n\"]],[],false,[\"loc\",\"game-char\",\"on\"]]",
+    "id": "Df+R2ZFN",
+    "block": "[[[10,0],[14,0,\"info-panel\"],[12],[1,\"\\n  \"],[10,1],[15,0,[29,[\"points \",[30,0,[\"pointsClass\"]]]]],[12],[1,[28,[35,0],[\"_points\"],null]],[1,\" : \"],[1,[30,0,[\"points\"]]],[13],[1,\"\\n\"],[41,[28,[37,2],[[30,0,[\"isTraining\"]]],null],[[[1,\"    \"],[10,1],[12],[1,\" | \"],[13],[1,\"\\n    \"],[10,1],[15,0,[29,[\"points-timer \",[30,0,[\"pointsTimeClass\"]]]]],[12],[1,[28,[35,0],[\"_time\"],null]],[1,\" : \"],[1,[30,0,[\"time\"]]],[1,\"s\"],[13],[1,\"\\n\"]],[]],null],[13],[1,\"\\n\"],[10,0],[14,0,\"gs-cheese\"],[12],[13],[1,\"\\n\"],[1,[28,[35,3],null,[[\"name\"],[\"cat-1\"]]]],[1,\"\\n\"],[1,[28,[35,3],null,[[\"name\"],[\"cat-2\"]]]],[1,\"\\n\"],[1,[28,[35,3],null,[[\"name\"],[\"cat-3\"]]]],[1,\"\\n\"],[1,[28,[35,3],null,[[\"name\"],[\"mouse-1\"]]]],[1,\"\\n\"],[1,[28,[35,3],null,[[\"name\"],[\"mouse-2\"]]]],[1,\"\\n\"],[1,[28,[35,3],null,[[\"name\"],[\"mouse-3\"]]]],[1,\"\\n\"],[10,0],[14,0,\"gs-cheese-base\"],[12],[13],[1,\"\\n\"],[11,\"button\"],[24,0,\"base-button floating-button-close\"],[24,4,\"button\"],[4,[38,4],[\"click\",[30,0,[\"endGame\"]]],null],[12],[1,\"×\"],[13],[1,\"\\n\"]],[],false,[\"loc\",\"if\",\"not\",\"game-char\",\"on\"]]",
     "moduleName": "catch-the-mouse/templates/components/game-screen.hbs",
     "isStrictMode": false
   });
@@ -2750,8 +2817,8 @@
   0; //eaimeta@70e063a35619d71f0,"@ember/template-factory"eaimeta@70e063a35619d71f
 
   var _default = (0, _templateFactory.createTemplateFactory)({
-    "id": "1iPpxySA",
-    "block": "[[[10,0],[15,0,[30,0,[\"classNames\"]]],[12],[1,\"\\n\"],[41,[30,0,[\"gameScreen\"]],[[[1,\"    \"],[1,[34,1]],[1,\"\\n\"]],[]],[[[41,[30,0,[\"boardScreen\"]],[[[1,\"    \"],[1,[34,2]],[1,\"\\n\"]],[]],[[[1,\"    \"],[10,0],[14,0,\"main-screen-buttons\"],[12],[1,\"\\n      \"],[11,\"button\"],[24,0,\"base-button\"],[24,4,\"button\"],[4,[38,3],[\"click\",[30,0,[\"startGame\"]]],null],[12],[1,[28,[35,4],[\"_start_game\"],null]],[13],[1,\"\\n      \"],[11,\"button\"],[24,0,\"base-button secondary-button\"],[24,4,\"button\"],[4,[38,3],[\"click\",[30,0,[\"openBoard\"]]],null],[12],[1,[28,[35,4],[\"_points\"],null]],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]],[]]],[13],[1,\"\\n\"]],[],false,[\"if\",\"game-screen\",\"board-screen\",\"on\",\"loc\"]]",
+    "id": "0T6pCwf6",
+    "block": "[[[10,0],[15,0,[30,0,[\"classNames\"]]],[12],[1,\"\\n\"],[41,[30,0,[\"gameScreen\"]],[[[1,\"    \"],[1,[34,1]],[1,\"\\n\"]],[]],[[[41,[30,0,[\"boardScreen\"]],[[[1,\"    \"],[1,[34,2]],[1,\"\\n\"]],[]],[[[1,\"    \"],[10,0],[14,0,\"main-screen-buttons\"],[12],[1,\"\\n      \"],[11,\"button\"],[24,0,\"base-button\"],[24,4,\"button\"],[4,[38,3],[\"click\",[30,0,[\"startGame\"]]],null],[12],[1,[28,[35,4],[\"_start_game\"],null]],[13],[1,\"\\n      \"],[11,\"button\"],[24,0,\"base-button secondary-button\"],[24,4,\"button\"],[4,[38,3],[\"click\",[28,[37,5],[[30,0,[\"startGame\"]],true],null]],null],[12],[1,[28,[35,4],[\"_training\"],null]],[13],[1,\"\\n      \"],[11,\"button\"],[24,0,\"base-button secondary-button\"],[24,4,\"button\"],[4,[38,3],[\"click\",[30,0,[\"openBoard\"]]],null],[12],[1,[28,[35,4],[\"_points\"],null]],[13],[1,\"\\n    \"],[13],[1,\"\\n  \"]],[]]]],[]]],[13],[1,\"\\n\"]],[],false,[\"if\",\"game-screen\",\"board-screen\",\"on\",\"loc\",\"fn\"]]",
     "moduleName": "catch-the-mouse/templates/components/main-screen.hbs",
     "isStrictMode": false
   });

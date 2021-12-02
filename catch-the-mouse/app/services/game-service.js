@@ -10,10 +10,11 @@ export default Service.extend(Evented, {
   @tracked time: 30,
   @tracked pointState: undefined,
   @tracked isPlaying: false,
+  @tracked isTraining: false,
   @tracked gameScreen: false,
   @tracked boardScreen: false,
   @tracked gates: [
-    {left: -5, bottom: 37, rotate: 299, occupied: false},
+    {left: -3, bottom: 37, rotate: 299, occupied: false},
     {left: 16, bottom: 1,  rotate: 0, occupied: false},
     {left: 20, bottom: 35, rotate: 232, occupied: false},
     {left: 23, bottom: 82, rotate: 0, occupied: false},
@@ -56,6 +57,9 @@ export default Service.extend(Evented, {
   },
 
   handleTimer() {
+    if (this.isTraining) {
+      return;
+    }
     setTimeout(() => {
       if (this.isDestroyed || this.isDestroying || !this.gameScreen) {
         return;
@@ -74,10 +78,10 @@ export default Service.extend(Evented, {
     const gates = this.gates;
     const freeGates = gates && gates.length > 0 && gates.filterBy('occupied', false);
     const freeGateIndex = freeGates && freeGates.length > 0 && Math.floor(Math.random() * freeGates.length);
-    if (freeGateIndex && freeGates[freeGateIndex]) {
+    if ((freeGateIndex >= 0) && freeGates[freeGateIndex]) {
       freeGates[freeGateIndex].occupied = true;
     }
-    return freeGateIndex && freeGates[freeGateIndex];
+    return (freeGateIndex >= 0) && freeGates[freeGateIndex];
   },
 
   unlockGate(gate) {
@@ -86,8 +90,9 @@ export default Service.extend(Evented, {
     }
   },
 
-  startGame() {
+  startGame(training) {
     this.isPlaying = true;
+    this.isTraining = training === true;
     this.gameScreen = true;
     this.resetPoints();
     this.resetTime();
@@ -101,6 +106,7 @@ export default Service.extend(Evented, {
 
   goHome() {
     this.isPlaying = false;
+    this.isTraining = false;
     this.boardScreen = false;
     this.gameScreen = false;
   }

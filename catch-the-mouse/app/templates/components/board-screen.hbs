@@ -3,10 +3,12 @@
     <button type='button' class='base-button floating-button-close' {{on 'click' this.showBoard}}>&#215;</button>
     <span class='points-title'>{{loc '_your_score'}}:</span>
     <span class='points'>{{this.points}}</span>
-    <span class='name'><Input @placeholder={{loc '_name'}} @type='text' @value={{this.user}}/></span>
-    <div class='points-buttons'>
-      <button type='button' disabled={{not this.user}} class='base-button' {{on 'click' this.saveScore}}>{{loc '_save'}}</button>
-    </div>
+    {{#if (not this.isTraining)}}
+      <span class='name'><Input @placeholder={{loc '_name'}} @type='text' @value={{this.user}}/></span>
+      <div class='points-buttons'>
+        <button type='button' disabled={{not this.user}} class='base-button' {{on 'click' this.saveScore}}>{{loc '_save'}}</button>
+      </div>
+    {{/if}}
   </div>
 {{else}}
   <div class='board-panel'>
@@ -14,7 +16,7 @@
     <span class='points-title'>{{loc '_score_board'}}</span>
     <div class='points-records'>
       {{#each this.records as |record|}}
-        <div class='points-record'><span>{{record.user}}</span><span>:</span><span>{{record.points}}</span></div>
+        <div class='points-record'><span>{{record.num}}. {{record.user}}</span><span>{{record.points}}</span></div>
       {{/each}}
     </div>
     <div class='points-buttons'>

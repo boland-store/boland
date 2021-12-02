@@ -11,5 +11,6 @@
   "_save":"save",
   "_name":"name",
   "_reset":"reset",
-  "_time":"time"
+  "_time":"time",
+  "_training":"training"
 }

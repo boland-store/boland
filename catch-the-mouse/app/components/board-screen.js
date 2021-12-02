@@ -17,6 +17,7 @@ export default Component.extend({
 
   points: alias('gameService.points'),
   isPlaying: alias('gameService.isPlaying'),
+  isTraining: alias('gameService.isTraining'),
 
   showScore: computed('isPlaying', 'confirmedDialog', function() {
     const confirmedDialog = this.confirmedDialog;
@@ -28,8 +29,12 @@ export default Component.extend({
     this._super(...arguments);
     set(this, 'confirmedDialog', false);
     const localStorageService = this.localStorageService;
-    const records = localStorageService && localStorageService.getCachedItem('records');
+    let records = localStorageService && localStorageService.getCachedItem('records');
+    if (!records) {
+      records = [];
+    }
     if(records) {
+      records = this.topRecords(records);
       set(this, 'records', records);
     }
   },
@@ -37,6 +42,9 @@ export default Component.extend({
   @action
   showBoard() {
     set(this, 'confirmedDialog', true);
+    if (this.isTraining) {
+      this.goHome();
+    }
   },
 
   @action
@@ -46,15 +54,34 @@ export default Component.extend({
     const newRecord = { user, points };
     let records = this.records ? this.records : [];
     records.pushObject(newRecord);
+    records = this.topRecords(records);
+    const localStorageService = this.localStorageService;
+    localStorageService && localStorageService.setCachedItem('records', records);
+    set(this, 'records', records);
+    set(this, 'confirmedDialog', true);
+  },
+
+  topRecords(customRecords) {
+    let records = customRecords ? customRecords : this.records;
+    if (!records) {
+      records = [];
+    }
+    if (records.length < 5) {
+      let i;
+      const newItemsCount = 5 - records.length;
+      for (i = 0; i < newItemsCount; i=i+1) {
+        records.pushObject({});
+      }
+    }
     records = records.sortBy('points');
     if (records.length > 5) {
       records = records.slice(records.length - 5);
     }
     records = records.reverse();
-    const localStorageService = this.localStorageService;
-    localStorageService && localStorageService.setCachedItem('records', records);
-    set(this, 'records', records);
-    set(this, 'confirmedDialog', true);
+    records.forEach((record, index) => {
+      record.num = index + 1;
+    });
+    return records;
   },
 
   @action
@@ -66,7 +93,7 @@ export default Component.extend({
   @action
   resetCachedPoints() {
     const localStorageService = this.localStorageService;
-    const records = [];
+    const records = this.topRecords([]);
     localStorageService && localStorageService.setCachedItem('records', records);
     set(this, 'records', records);
   }

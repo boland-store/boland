@@ -151,9 +151,13 @@
 .board-screen .info-panel .points-records {
   max-height: calc(100vh - 11rem);
   overflow: auto;
+  width: 100%;
 }
 .board-screen .board-panel .points-record,
 .board-screen .info-panel .points-record {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   font-size: 1.3rem;
   text-transform: none;
   padding-left: 0.8rem;

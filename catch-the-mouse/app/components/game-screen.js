@@ -11,6 +11,7 @@ export default Component.extend({
 
   points: alias('gameService.points'),
   time: alias('gameService.time'),
+  isTraining: alias('gameService.isTraining'),
   pointsClass: computed('gameService.pointState', 'points', function() {
     const gameService = this.gameService;
     const pointState = gameService && gameService.pointState;

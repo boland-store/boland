@@ -14,9 +14,9 @@ export default class extends Component {
   @alias('gameService.boardScreen') boardScreen;
 
   @action
-  startGame() {
+  startGame(training) {
     const gameService = this.gameService;
-    gameService && gameService.startGame();
+    gameService && gameService.startGame(training);
   }
 
   @action
